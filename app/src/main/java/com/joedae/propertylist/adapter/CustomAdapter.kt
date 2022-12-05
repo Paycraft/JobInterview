@@ -1,7 +1,6 @@
 package com.joedae.propertylist.adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.joedae.propertylist.R
 import com.joedae.propertylist.data.Property
-import java.net.URL
 
 
 class CustomAdapter(val applicationcContext: Context,val inflter: LayoutInflater, val propertyList: List<Property>) : BaseAdapter() {
