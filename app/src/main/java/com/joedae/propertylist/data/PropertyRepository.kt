@@ -12,12 +12,13 @@ class PropertyRepository {
 
     private lateinit var apiResponse: PropertyResponse
 
-    fun getListings(): PropertyResponse {
+    fun getListings(onDataLoad: OnDataLoad) {
         val service = Retrofit.Builder()
             .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(PropertyService::class.java)
+
 
         service.getProperty().enqueue(object : Callback<PropertyResponse> {
             override fun onFailure(call: Call<PropertyResponse>, t: Throwable) {
@@ -26,8 +27,12 @@ class PropertyRepository {
             override fun onResponse(call: Call<PropertyResponse>, response: Response<PropertyResponse>) {
                 Log.i("API Response", response.body().toString())
                 apiResponse = response.body()!!
+                onDataLoad.onDataLoad(apiResponse)
             }
         })
-        return apiResponse
+    }
+
+    fun getListingById(id: Int) {
+
     }
 }
