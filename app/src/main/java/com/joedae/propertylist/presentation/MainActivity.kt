@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         propertyViewModel = PropertyViewModel()
         propertyViewModel.getListings()
         propertyViewModel.propertyData.observe(this) {
-            val customerAdapter: CustomAdapter = CustomAdapter(this.applicationContext, layoutInflater, it.results)
+            val customerAdapter = CustomAdapter(this.applicationContext, layoutInflater, it.results)
             binding.list.adapter = customerAdapter
         }
 
