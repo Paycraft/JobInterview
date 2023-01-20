@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.joedae.propertylist.R
@@ -26,11 +27,12 @@ class CustomAdapter(val applicationcContext: Context,val inflter: LayoutInflater
     }
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View? {
-        var view = inflter.inflate(R.layout.activity_list_view, null)
-        var imageview: ImageView = view.findViewById(R.id.firstImage)
-        var title: TextView = view.findViewById(R.id.propertyTitle)
-        var price: TextView = view.findViewById(R.id.price)
-        var address: TextView = view.findViewById(R.id.address)
+        val view = inflter.inflate(R.layout.activity_list_view, null)
+        val imageview: ImageView = view.findViewById(R.id.firstImage)
+        val title: TextView = view.findViewById(R.id.propertyTitle)
+        val price: TextView = view.findViewById(R.id.price)
+        val address: TextView = view.findViewById(R.id.address)
+        val favorite: ImageButton = view.findViewById(R.id.favoritesButton)
 
 //        var inputStream = URL(propertyList.get(p0).listing.localization.de.attachments.first().url).openStream()
 //        var bmp = BitmapFactory.decodeStream(inputStream)
@@ -42,9 +44,9 @@ class CustomAdapter(val applicationcContext: Context,val inflter: LayoutInflater
         address.text = propertyList.get(p0).listing.address.street + ", " + propertyList.get(p0).listing.address.locality
 
         if (propertyList.get(p0).isFavorite) {
-            //TODO
+            favorite.setImageResource(R.drawable.fav_filled)
         } else {
-            //TODO
+            favorite.setImageResource(R.drawable.fav_border)
         }
 
         return view

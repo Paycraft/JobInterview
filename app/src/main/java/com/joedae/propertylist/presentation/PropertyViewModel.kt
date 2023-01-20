@@ -34,7 +34,6 @@ class PropertyViewModel: ViewModel() {
     }
 
     fun getListingById(id: Int) {
-        getPropertyUseCase.getPropertyById(id)
     }
 
     fun startListenToFavoritesChanges(context: Context) {
