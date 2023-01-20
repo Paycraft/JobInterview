@@ -41,6 +41,12 @@ class CustomAdapter(val applicationcContext: Context,val inflter: LayoutInflater
         price.text = propertyList.get(p0).listing.prices.buy.price + " " + propertyList.get(p0).listing.prices.currency
         address.text = propertyList.get(p0).listing.address.street + ", " + propertyList.get(p0).listing.address.locality
 
+        if (propertyList.get(p0).isFavorite) {
+            //TODO
+        } else {
+            //TODO
+        }
+
         return view
     }
 }

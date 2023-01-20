@@ -1,3 +1,3 @@
 package com.joedae.propertylist.data
 
-data class Property(val id: String, val listing: Listing)
+data class Property(val id: String, val listing: Listing, var isFavorite: Boolean = false)
