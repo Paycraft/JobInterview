@@ -1,22 +1,17 @@
 package com.joedae.propertylist.presentation
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.joedae.propertylist.data.FavoritesRepo
 import com.joedae.propertylist.data.OnDataLoad
 import com.joedae.propertylist.data.PropertyResponse
-import com.joedae.propertylist.data.db.FavoritesDao
-import com.joedae.propertylist.data.db.FavoritesDatabase
 import com.joedae.propertylist.data.db.FavoritesEntity
 import com.joedae.propertylist.domain.GetFavoritesUseCase
 import com.joedae.propertylist.domain.GetPropertyUseCase
 import kotlinx.coroutines.launch
 
-class PropertyViewModel: ViewModel() {
-    private val getPropertyUseCase: GetPropertyUseCase = GetPropertyUseCase()
+class PropertyViewModel(val getPropertyUseCase: GetPropertyUseCase, val getFavoritesUseCase: GetFavoritesUseCase): ViewModel() {
 
     private val _propertyData = MutableLiveData<PropertyResponse>()
     val propertyData: LiveData<PropertyResponse> = _propertyData
@@ -29,16 +24,18 @@ class PropertyViewModel: ViewModel() {
         }
     }
 
-    fun getListings() {
+    init {
+        getListings()
+    }
+
+    private fun getListings() {
         viewModelScope.launch { getPropertyUseCase.getProperties(onDataLoad) }
     }
 
     fun getListingById(id: Int) {
     }
 
-    fun startListenToFavoritesChanges(context: Context) {
-        val favoritesRepo = FavoritesRepo(FavoritesDatabase.getInstance(context).favoritesDao())
-        val getFavoritesUseCase = GetFavoritesUseCase(favoritesRepo)
+    fun startListenToFavoritesChanges() {
         viewModelScope.launch { getFavoritesUseCase.getFavorites().collect { _favoritesData.value = it } }
     }
 }
