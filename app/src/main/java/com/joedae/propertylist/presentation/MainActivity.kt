@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.joedae.propertylist.adapter.CustomAdapter
 import com.joedae.propertylist.data.FavoritesRepo
 import com.joedae.propertylist.data.Property
-import com.joedae.propertylist.data.db.FavoritesDao
 import com.joedae.propertylist.data.db.FavoritesDatabase
 import com.joedae.propertylist.databinding.ActivityMainBinding
 import com.joedae.propertylist.di.PropertyComponent
@@ -22,21 +22,21 @@ class MainActivity : AppCompatActivity() {
     val getFavoritesUseCase = GetFavoritesUseCase(favoritesRepo = FavoritesRepo(FavoritesDatabase.getInstance(PropertyComponent.getContext()).favoritesDao()))
     var propertyViewModel = PropertyViewModel(getPropertyUseCase = GetPropertyUseCase(), getFavoritesUseCase)
 
+    init {
+        propertyViewModel.startListenToFavoritesChanges()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-    }
 
-    init {
-        propertyViewModel.startListenToFavoritesChanges()
-    }
-
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         propertyViewModel.propertyData.observe(this) {
-            val customerAdapter = CustomAdapter(this.applicationContext, layoutInflater, it.results)
-            binding.list.adapter = customerAdapter
+            val adapter = CustomAdapter(it.results)
+            Toast.makeText(this, adapter.itemCount.toString(), Toast.LENGTH_SHORT).show()
+
+            binding.list.swapAdapter(adapter, true)
             listings = mutableListOf(it.results)
         }
 
@@ -51,7 +51,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        return super.onCreateView(name, context, attrs)
     }
 }
