@@ -1,9 +1,6 @@
 package com.joedae.propertylist.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -12,8 +9,14 @@ abstract class FavoritesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insertOne(favoritesEntity: FavoritesEntity)
 
-    @Query("SELECT * FROM Watchlist")
+    @Query("Select * From Watchlist")
     protected abstract fun loadFavoriteIdsFlow(): Flow<List<FavoritesEntity>>
 
     fun loadFavoriteIdsDistinctFlow() = loadFavoriteIdsFlow().distinctUntilChanged()
+
+    @Query("Select * From Watchlist where ListingId=:listingId")
+    abstract fun get(listingId: String): FavoritesEntity?
+
+    @Delete
+    abstract fun delete(favoritesEntity: FavoritesEntity)
 }
