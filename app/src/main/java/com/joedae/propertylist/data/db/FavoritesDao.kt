@@ -10,9 +10,9 @@ abstract class FavoritesDao {
     abstract fun insertOne(favoritesEntity: FavoritesEntity)
 
     @Query("Select * From Watchlist")
-    protected abstract fun loadFavoriteIdsFlow(): Flow<List<FavoritesEntity>>
+    abstract fun loadFavoritesFlow(): Flow<List<FavoritesEntity>>
 
-    fun loadFavoriteIdsDistinctFlow() = loadFavoriteIdsFlow().distinctUntilChanged()
+    fun loadFavoriteUpdatesFlow() = loadFavoritesFlow().distinctUntilChanged()
 
     @Query("Select * From Watchlist where ListingId=:listingId")
     abstract fun get(listingId: String): FavoritesEntity?

@@ -24,7 +24,11 @@ class PropertyRepository {
             override fun onFailure(call: Call<PropertyResponse>, t: Throwable) {
                 Log.i("API Response", "Failed")
             }
-            override fun onResponse(call: Call<PropertyResponse>, response: Response<PropertyResponse>) {
+
+            override fun onResponse(
+                call: Call<PropertyResponse>,
+                response: Response<PropertyResponse>
+            ) {
                 Log.i("API Response", response.body().toString())
                 apiResponse = response.body()!!
                 onDataLoad.onDataLoad(apiResponse)

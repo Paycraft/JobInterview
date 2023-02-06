@@ -2,7 +2,6 @@ package com.joedae.propertylist.domain
 
 import com.joedae.propertylist.data.OnDataLoad
 import com.joedae.propertylist.data.PropertyRepository
-import com.joedae.propertylist.data.PropertyResponse
 
 class GetPropertyUseCase {
 

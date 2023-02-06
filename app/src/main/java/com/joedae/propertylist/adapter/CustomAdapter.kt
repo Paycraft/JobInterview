@@ -10,7 +10,8 @@ import com.joedae.propertylist.data.db.SetFavorite
 import com.joedae.propertylist.databinding.ActivityListViewBinding
 
 
-class CustomAdapter(val mList: List<Property>, val setFavorite: SetFavorite) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CustomAdapter(var properties: List<Property>, val setFavorite: SetFavorite) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ActivityListViewBinding.inflate(LayoutInflater.from(parent.context))
@@ -22,22 +23,30 @@ class CustomAdapter(val mList: List<Property>, val setFavorite: SetFavorite) : R
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         if (holder is PropertyViewholder) {
-            holder.binder(mList[position])
+            holder.binder(properties[position])
         }
 
         Log.i("Test", "binding")
     }
 
     override fun getItemCount(): Int {
-        return mList.size
+        return properties.size
     }
 
-    inner class PropertyViewholder(val binding: ActivityListViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PropertyViewholder(val binding: ActivityListViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun binder(property: Property) {
             binding.propertyTitle.text = property.listing.localization.de.text.title
-            binding.price.text = property.listing.prices.buy.price + " " + property.listing.prices.currency
-            binding.address.text = property.listing.address.street + ", " + property.listing.address.locality
+            binding.price.text =
+                "${property.listing.prices.buy.price}  ${property.listing.prices.currency}"
+            binding.address.text =
+                "${property.listing.address.street} , ${property.listing.address.locality}"
             binding.firstImage.setImageResource(R.drawable.image1)
+            if (property.isFavorite) {
+                binding.favoritesButton.setImageResource(R.drawable.fav_filled)
+            } else {
+                binding.favoritesButton.setImageResource(R.drawable.fav_border)
+            }
 
             binding.favoritesButton.setOnClickListener {
                 setFavorite.onSetFavorite(property.id)

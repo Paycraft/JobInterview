@@ -10,11 +10,13 @@ import com.joedae.propertylist.data.db.FavoritesEntity
 import com.joedae.propertylist.domain.FavoritesUseCase
 import com.joedae.propertylist.domain.GetPropertyUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PropertyViewModel(val getPropertyUseCase: GetPropertyUseCase, val favoritesUseCase: FavoritesUseCase): ViewModel() {
+class PropertyViewModel(
+    val getPropertyUseCase: GetPropertyUseCase,
+    val favoritesUseCase: FavoritesUseCase
+) : ViewModel() {
 
     private val _propertyData = MutableLiveData<PropertyResponse>()
     val propertyData: LiveData<PropertyResponse> = _propertyData
@@ -27,11 +29,7 @@ class PropertyViewModel(val getPropertyUseCase: GetPropertyUseCase, val favorite
         }
     }
 
-    init {
-        getListings()
-    }
-
-    private fun getListings() {
+    fun getListings() {
         viewModelScope.launch { getPropertyUseCase.getProperties(onDataLoad) }
     }
 
@@ -43,8 +41,16 @@ class PropertyViewModel(val getPropertyUseCase: GetPropertyUseCase, val favorite
         }
     }
 
-    fun startListenToFavoritesChanges() {
-        viewModelScope.launch { favoritesUseCase.getFavorites().collect { _favoritesData.value = it }
+    fun getFavorites() {
+        viewModelScope.launch {
+            favoritesUseCase.getFavorites().collect { _favoritesData.value = it }
         }
     }
+
+    fun getFavoritesUpdates() {
+        viewModelScope.launch {
+            favoritesUseCase.getFavoritesUpdates().collect { _favoritesData.value = it }
+        }
+    }
+
 }
