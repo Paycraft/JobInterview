@@ -17,10 +17,15 @@ abstract class FavoritesDatabase : RoomDatabase() {
         fun getInstance(context: Context): FavoritesDatabase {
             if (INSTANCE == null) {
                 synchronized(FavoritesDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, FavoritesDatabase::class.java, "RoomFavorites_DB").build()
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        FavoritesDatabase::class.java,
+                        "RoomFavorites_DB"
+                    ).build()
                 }
             }
-            return INSTANCE ?: throw AssertionError("There is absolutely no way that ContactDatabase is null")
+            return INSTANCE
+                ?: throw AssertionError("There is absolutely no way that ContactDatabase is null")
         }
     }
 }

@@ -4,9 +4,9 @@ import com.joedae.propertylist.data.FavoritesRepo
 
 
 class FavoritesUseCase(val favoritesRepo: FavoritesRepo) {
+    fun getFavorites() = favoritesRepo.getFavorites()
 
-
-    fun getFavorites()=favoritesRepo.getFavorites()
+    fun getFavoritesUpdates() = favoritesRepo.getFavoritesUpdates()
 
     fun setFavorites(id: String) {
         favoritesRepo.setFavorites(id)

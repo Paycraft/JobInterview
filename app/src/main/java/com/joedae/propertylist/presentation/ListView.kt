@@ -1,7 +1,7 @@
 package com.joedae.propertylist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.joedae.propertylist.R
 
 class ListView : AppCompatActivity() {
