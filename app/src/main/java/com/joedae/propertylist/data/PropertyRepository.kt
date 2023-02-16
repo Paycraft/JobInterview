@@ -37,6 +37,5 @@ class PropertyRepository {
     }
 
     fun getListingById(id: Int) {
-
     }
 }
