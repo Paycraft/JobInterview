@@ -81,37 +81,4 @@ class MainActivity : ComponentActivity() {
             binding.list.adapter?.notifyDataSetChanged()
         }
     }
-    
-    @Composable
-    fun ListItem(propertys: List<Property>) {
-        Column (horizontalAlignment = Alignment.CenterHorizontally) {
-            propertys.forEach {
-                Row {
-                    Text(text = it.listing.prices.buy.price)
-                    Image(painter = painterResource(R.drawable.image1), contentDescription = "Main Image")
-                }
-
-                Column {
-                    Text(text = it.listing.localization.de.text.title)
-                    Text(text = it.listing.address.locality)
-                    Spacer(modifier = Modifier.height(40.dp))
-                }
-            }
-        }
-    }
-
-    @Composable
-    @Preview
-    fun ListItemPreview() {
-        val property = Property(
-            "1", Listing(
-                Prices("CHF", Buy("99")), Address("Mustertrasse", "Bern"), Localization(
-                    De(
-                        emptyArray(), com.joedae.propertylist.data.Text("Schloss")
-                    )
-                )
-            ), false
-        )
-        ListItem(propertys = listOf(property))
-    }
 }
