@@ -69,14 +69,14 @@ class MainActivity : ComponentActivity() {
 
         propertyViewModel.favoritesData.observe(this) { favoritesList ->
             // Set Favorite flags
-            adapter.properties.map { listing ->
-                listing.isFavorite = false
-                favoritesList.map { favoritesEntity ->
-                    if (listing.id == favoritesEntity.listingId) {
-                        listing.isFavorite = true
-                    }
-                }
-            }
+//            adapter.properties.map { listing ->
+//                listing.isFavorite = false
+//                favoritesList.map { favoritesEntity ->
+//                    if (listing.id == favoritesEntity.listingId) {
+//                        listing.isFavorite = true
+//                    }
+//                }
+//            }
             // Properties list now has Favorite flags set, update the UI
             binding.list.adapter?.notifyDataSetChanged()
         }

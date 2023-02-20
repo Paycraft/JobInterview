@@ -42,11 +42,11 @@ class CustomAdapter(var properties: List<Property>, val setFavorite: SetFavorite
             binding.address.text =
                 "${property.listing.address.street} , ${property.listing.address.locality}"
             binding.firstImage.setImageResource(R.drawable.image1)
-            if (property.isFavorite) {
-                binding.favoritesButton.setImageResource(R.drawable.fav_filled)
-            } else {
-                binding.favoritesButton.setImageResource(R.drawable.fav_border)
-            }
+//            if (property.isFavorite) {
+//                binding.favoritesButton.setImageResource(R.drawable.fav_filled)
+//            } else {
+//                binding.favoritesButton.setImageResource(R.drawable.fav_border)
+//            }
 
             binding.favoritesButton.setOnClickListener {
                 setFavorite.onSetFavorite(property.id)
