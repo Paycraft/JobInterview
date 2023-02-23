@@ -8,7 +8,8 @@ data class Property (
     val remoteViewing: Boolean,
     val listingType: ListingType,
     val listerBranding: ListerBranding,
-    val listing: Listing
+    val listing: Listing,
+    var isFavorite: Boolean
 )
 
 @Serializable

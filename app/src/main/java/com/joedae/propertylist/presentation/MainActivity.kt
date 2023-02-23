@@ -13,16 +13,6 @@ import com.joedae.propertylist.domain.GetPropertyUseCase
 
 //Compose
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.joedae.propertylist.R
 import com.joedae.propertylist.data.*
 
 class MainActivity : ComponentActivity() {
@@ -55,28 +45,26 @@ class MainActivity : ComponentActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.list.layoutManager = LinearLayoutManager(this)
-//        binding.list.adapter = adapter
 //        setContentView(binding.root)
 
         propertyViewModel.propertyData.observe(this) {
             setContent {
-                ListItem(it.results)
+                ListItem(it.results, setFavorite)
             }
-//            adapter.properties = it.results
             //Once we get Favorite flags we update the UI
             propertyViewModel.getFavorites()
         }
 
         propertyViewModel.favoritesData.observe(this) { favoritesList ->
             // Set Favorite flags
-//            adapter.properties.map { listing ->
-//                listing.isFavorite = false
-//                favoritesList.map { favoritesEntity ->
-//                    if (listing.id == favoritesEntity.listingId) {
-//                        listing.isFavorite = true
-//                    }
-//                }
-//            }
+            adapter.properties.map { listing ->
+                listing.isFavorite = false
+                favoritesList.map { favoritesEntity ->
+                    if (listing.id == favoritesEntity.listingId) {
+                        listing.isFavorite = true
+                    }
+                }
+            }
             // Properties list now has Favorite flags set, update the UI
             binding.list.adapter?.notifyDataSetChanged()
         }
