@@ -36,6 +36,8 @@ data class Address (
 
 @Serializable
 data class GeoCoordinates (
+    val accuracy: String?,
+    val manual: Boolean?,
     val latitude: Double,
     val longitude: Double
 )
@@ -54,16 +56,46 @@ data class Listing (
 
 @Serializable
 data class Characteristics (
+    val cubage: Long?,
+    val totalFloorSpace: Long,
+    val hasFireplace: Boolean?,
     val numberOfRooms: Double,
-    val livingSpace: Long,
+    val yearBuilt: Long?,
+    val isMinergieGeneral: Boolean?,
+    val isWheelchairAccessible: Boolean?,
+    val hasSwimmingPool: Boolean?,
+    val ceilingHeight: Double?,
+    val distanceShop: Long?,
+    val yearLastRenovated: Long?,
+    val hasGarage: Boolean?,
+    val hasParking: Boolean?,
+    val numberOfFloors: Long?,
     val lotSize: Long,
-    val totalFloorSpace: Long
+    val hasBalcony: Boolean?,
+    val distanceMotorway: Long?,
+    val livingSpace: Long,
+    val hasCableTv: Boolean?,
+    val hasNiceView: Boolean?,
+    val distanceHighSchool: Long?,
+    val distanceKindergarten: Long?,
+    val distancePrimarySchool: Long?,
+    val distancePublicTransport: Long?,
+    val hasElevator: Boolean?,
+    val isNewBuilding: Boolean?,
+    val isMinergieCertified: Boolean?,
+    val isChildFriendly: Boolean?
 )
 
 @Serializable
 data class Lister (
+    val accountActive: Boolean?,
+    val migratedToAws: Boolean?,
+    val type: String?,
+    val logoUrl: String,
+    val legalName: String?,
     val phone: String,
-    val logoUrl: String
+    val name: String?,
+    val id: String?,
 )
 
 @Serializable
@@ -88,7 +120,9 @@ data class Attachment (
 
 @Serializable
 data class Text (
-    val title: String
+    val title: String,
+    val description: String?,
+    val situation: String?
 )
 
 @Serializable

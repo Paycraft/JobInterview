@@ -1,7 +1,6 @@
 package com.joedae.propertylist.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -19,41 +18,91 @@ import com.joedae.propertylist.data.*
 @Composable
 fun PDP(property: Property) {
     Column {
-        Column {
-            Image(
-                painterResource(R.drawable.image1),
-                "Images",
-                Modifier.size(width = 393.dp, height = 303.dp)
-            )
+        Image(
+            painterResource(R.drawable.main),
+            "Images",
+            Modifier.size(width = 393.dp, height = 303.dp)
+        )
+        Text(
+            property.listing.localization.de.text.title,
+            fontSize = 27.sp,
+            fontWeight = W700
+        )
+        Text(
+            "Rent per month",
+            fontSize = 19.sp,
+            fontWeight = W400
+        )
+        Text(
+            property.listing.prices.currency + " " + property.listing.prices.buy.price.toString() + ".-",
+            fontSize = 27.sp,
+            fontWeight = W700
+        )
+        Row {
             Text(
-                property.listing.localization.de.text.title,
-                fontSize = 27.sp,
-                fontWeight = W700
-            )
-            Text(
-                "Rent per month",
+                "Rooms",
                 fontSize = 19.sp,
                 fontWeight = W400
             )
+            Spacer(modifier = Modifier.width(170.dp))
             Text(
-                property.listing.prices.currency + " " + property.listing.prices.buy.price.toString() + ".-",
+                "Livingspace",
+                fontSize = 19.sp,
+                fontWeight = W400
+            )
+        }
+        Row {
+            Icon(
+                painter = painterResource(R.drawable.home),
+                contentDescription = "rooms icon",
+                modifier = Modifier.size(21.dp, 24.dp)
+            )
+            Text(
+                property.listing.characteristics.numberOfRooms.toString(),
                 fontSize = 27.sp,
                 fontWeight = W700
             )
-            Row {
-                Text("Rooms")
-                Spacer(modifier = Modifier.width(200.dp))
-                Text("Livingspace")
-            }
-            Row {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.fav_filled),
-//                    contentDescription = "favourite button"
-//                )
-                Text("Rooms")
-                Spacer(modifier = Modifier.width(200.dp))
-                Text("Livingspace")
-            }
+            Spacer(modifier = Modifier.width(170.dp))
+            Icon(
+                painter = painterResource(R.drawable.select),
+                contentDescription = "living space icon",
+                modifier = Modifier.size(24.dp)
+            )
+            Text(
+                property.listing.characteristics.livingSpace.toString() + " m²",
+                fontSize = 21.sp,
+                fontWeight = W700
+            )
+        }
+        Row {
+            Text(
+                "Available from",
+                fontSize = 19.sp,
+                fontWeight = W400
+            )
+            Spacer(modifier = Modifier.width(110.dp))
+            Text(
+                "Immediately",
+                fontSize = 19.sp,
+                fontWeight = W700
+            )
+        }
+        Image(
+            painter = painterResource(R.drawable.map),
+            contentDescription = "Map",
+            Modifier.size(width = 393.dp, height = 174.dp)
+        )
+        Text(
+            "Description",
+            fontSize = 27.sp,
+            fontWeight = W700
+        )
+        property.listing.localization.de.text.description?.let {
+            Text(
+                it,
+                fontSize = 19.sp,
+                fontWeight = W400
+            )
         }
     }
 }
@@ -77,15 +126,56 @@ fun PDPPreview() {
             emptyList(),
             Prices("CHF", Buy("ALL", 9999999, "ONETIME")),
             Address("La Brévine", "CH", "NE", "Musterstrasse 999", "2406"),
-            Characteristics(1.0, 1, 1, 1),
+            Characteristics(
+                1,
+                1,
+                true,
+                9.5,
+                1999,
+                true,
+                true,
+                true,
+                3.5,
+                1,
+                2022,
+                true,
+                true,
+                1,
+                1,
+                true,
+                1,
+                1,
+                true,
+                true,
+                1,
+                1,
+                1,
+                1,
+                true,
+                true,
+                true,
+                true
+            ),
             Localization(
                 "de", De(
-                    emptyList(), com.joedae.propertylist.data.Text("Schloss"), emptyList()
+                    emptyList(),
+                    com.joedae.propertylist.data.Text(
+                        "Schloss",
+                        "echt krasse bude alta",
+                        "im getho"
+                    ),
+                    emptyList()
                 )
             ),
             Lister(
+                true,
+                true,
+                "AGENCY",
+                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
+                "SMG",
                 "+41 44 711 86 67",
-                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png"
+                "Homegate",
+                "heia"
             )
         ), false
     )

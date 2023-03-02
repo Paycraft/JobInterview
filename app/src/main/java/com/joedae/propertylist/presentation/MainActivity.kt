@@ -2,16 +2,15 @@ package com.joedae.propertylist.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import com.joedae.propertylist.data.FavoritesRepo
+import com.joedae.propertylist.data.MyApplicationTheme
 import com.joedae.propertylist.data.db.FavoritesDatabase
 import com.joedae.propertylist.data.db.SetFavorite
 import com.joedae.propertylist.databinding.ActivityMainBinding
 import com.joedae.propertylist.di.PropertyComponent
 import com.joedae.propertylist.domain.FavoritesUseCase
 import com.joedae.propertylist.domain.GetPropertyUseCase
-
-//Compose
-import androidx.activity.compose.setContent
-import com.joedae.propertylist.data.*
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
