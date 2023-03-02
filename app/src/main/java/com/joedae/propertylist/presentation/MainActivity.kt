@@ -2,8 +2,6 @@ package com.joedae.propertylist.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.joedae.propertylist.adapter.CustomAdapter
 import com.joedae.propertylist.data.db.FavoritesDatabase
 import com.joedae.propertylist.data.db.SetFavorite
 import com.joedae.propertylist.databinding.ActivityMainBinding
@@ -33,8 +31,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    val adapter = CustomAdapter(listOf(), setFavorite)
-
     init {
         propertyViewModel.getListings()
         propertyViewModel.getFavoritesUpdates()
@@ -42,14 +38,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.list.layoutManager = LinearLayoutManager(this)
-//        setContentView(binding.root)
 
         propertyViewModel.propertyData.observe(this) {
             setContent {
-                ListItem(it.results, setFavorite)
+//                ListItem(it.results, setFavorite)
+                MyApplicationTheme {
+                    PDP(property = it.results[0])
+                }
             }
             //Once we get Favorite flags we update the UI
             propertyViewModel.getFavorites()
@@ -57,16 +53,16 @@ class MainActivity : ComponentActivity() {
 
         propertyViewModel.favoritesData.observe(this) { favoritesList ->
             // Set Favorite flags
-            adapter.properties.map { listing ->
-                listing.isFavorite = false
-                favoritesList.map { favoritesEntity ->
-                    if (listing.id == favoritesEntity.listingId) {
-                        listing.isFavorite = true
-                    }
-                }
-            }
-            // Properties list now has Favorite flags set, update the UI
-            binding.list.adapter?.notifyDataSetChanged()
+            //TODO
+//             adapter.properties.map { listing ->
+//                listing.isFavorite = false
+//                favoritesList.map { favoritesEntity ->
+//                    if (listing.id == favoritesEntity.listingId) {
+//                        listing.isFavorite = true
+//                    }
+//                }
+//            }
+
         }
     }
 }
