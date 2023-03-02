@@ -37,12 +37,14 @@ fun ListItem(properties: List<Property>, setFavorite: SetFavorite?) {
                     Icon(
                         painter = painterResource(id = R.drawable.fav_border),
                         contentDescription = "favourite button",
-                        modifier = Modifier.clickable { setFavorite?.onSetFavorite(property.id) })
+                        modifier = Modifier.clickable { setFavorite?.onSetFavorite(property.id) }
+                    )
                 } else {
                     Icon(
                         painter = painterResource(id = R.drawable.fav_filled),
                         contentDescription = "favourite button",
-                        modifier = Modifier.clickable { setFavorite?.onSetFavorite(property.id) })
+                        modifier = Modifier.clickable { setFavorite?.onSetFavorite(property.id) }
+                    )
                 }
             }
 

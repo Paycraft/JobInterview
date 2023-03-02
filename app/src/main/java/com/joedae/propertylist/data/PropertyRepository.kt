@@ -36,6 +36,6 @@ class PropertyRepository {
         })
     }
 
-    fun getListingById(id: Int) {
+    fun getListingById() {
     }
 }

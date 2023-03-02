@@ -1,7 +1,9 @@
 package com.joedae.propertylist.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -38,14 +40,22 @@ fun PDP(property: Property) {
                 fontSize = 27.sp,
                 fontWeight = W700
             )
-            Row() {
+            Row {
+                Text("Rooms")
+                Spacer(modifier = Modifier.width(200.dp))
+                Text("Livingspace")
+            }
+            Row {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.fav_filled),
+//                    contentDescription = "favourite button"
+//                )
                 Text("Rooms")
                 Spacer(modifier = Modifier.width(200.dp))
                 Text("Livingspace")
             }
         }
     }
-
 }
 
 @Composable
