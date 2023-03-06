@@ -116,10 +116,10 @@ fun PDPPreview() {
             "SMG Swiss Marketplace Group AG",
             "Homegate",
             Address("Zürich", "CH", "ZH", "Werdstrasse 21", "8004"),
-            false,
-            false,
-            false,
-            "smg-swiss-marketplace-group-ag"
+            adActive = false,
+            isQualityPartner = false,
+            isPremiumBranding = false,
+            profilePageUrlKeyword = "smg-swiss-marketplace-group-ag"
         ), Listing(
             "104123262",
             "BUY",
@@ -132,34 +132,34 @@ fun PDPPreview() {
                 true,
                 9.5,
                 1999,
-                true,
-                true,
-                true,
-                3.5,
-                1,
-                2022,
-                true,
-                true,
-                1,
-                1,
-                true,
-                1,
-                1,
-                true,
-                true,
-                1,
-                1,
-                1,
-                1,
-                true,
-                true,
-                true,
-                true
+                isMinergieGeneral = true,
+                isWheelchairAccessible = true,
+                hasSwimmingPool = true,
+                ceilingHeight = 3.5,
+                distanceShop = 1,
+                yearLastRenovated = 2022,
+                hasGarage = true,
+                hasParking = true,
+                numberOfFloors = 1,
+                lotSize = 1,
+                hasBalcony = true,
+                distanceMotorway = 1,
+                livingSpace = 1,
+                hasCableTv = true,
+                hasNiceView = true,
+                distanceHighSchool = 1,
+                distanceKindergarten = 1,
+                distancePrimarySchool = 1,
+                distancePublicTransport = 1,
+                hasElevator = true,
+                isNewBuilding = true,
+                isMinergieCertified = true,
+                isChildFriendly = true
             ),
             Localization(
                 "de", De(
                     emptyList(),
-                    com.joedae.propertylist.data.Text(
+                    Text(
                         "Schloss",
                         "echt krasse bude alta",
                         "im getho"
@@ -168,14 +168,14 @@ fun PDPPreview() {
                 )
             ),
             Lister(
-                true,
-                true,
-                "AGENCY",
-                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-                "SMG",
-                "+41 44 711 86 67",
-                "Homegate",
-                "heia"
+                accountActive = true,
+                migratedToAws = true,
+                type = "AGENCY",
+                logoUrl = "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
+                legalName = "SMG",
+                phone = "+41 44 711 86 67",
+                name = "Homegate",
+                id = "heia"
             )
         ), false
     )

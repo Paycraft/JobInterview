@@ -10,20 +10,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
 import com.joedae.propertylist.R
 import com.joedae.propertylist.data.*
+import com.joedae.propertylist.data.db.FavoritesEntity
 import com.joedae.propertylist.data.db.SetFavorite
 
 @Composable
-fun ListItem(properties: List<Property>, setFavorite: SetFavorite?) {
+fun ListItem(properties: List<Property>, setFavorite: SetFavorite?, favData: LiveData<List<FavoritesEntity>>) {
+
+    val favoriteList by favData.observeAsState()
+
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         items(properties) { property ->
+            property.isFavorite = false
+            favoriteList?.map { favoritesEntity ->
+                if (property.id == favoritesEntity.listingId) {
+                    property.isFavorite = true
+                }
+            }
             Row {
                 Text(property.listing.prices.buy.price.toString())
                 Image(
@@ -124,5 +136,5 @@ fun ListItemPreview() {
         ), false
     )
 
-    ListItem(listOf(property), null)
+//    ListItem(listOf(property), null)
 }

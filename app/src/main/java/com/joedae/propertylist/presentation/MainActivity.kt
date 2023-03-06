@@ -3,6 +3,10 @@ package com.joedae.propertylist.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.joedae.propertylist.data.FavoritesRepo
 import com.joedae.propertylist.data.MyApplicationTheme
 import com.joedae.propertylist.data.db.FavoritesDatabase
@@ -41,27 +45,13 @@ class MainActivity : ComponentActivity() {
 
         propertyViewModel.propertyData.observe(this) {
             setContent {
-//                ListItem(it.results, setFavorite)
-                MyApplicationTheme {
-                    PDP(property = it.results[0])
-                }
+//                MyApplicationTheme {
+                    ListItem(it.results, setFavorite, propertyViewModel.favoritesData)
+//                    PDP(property = it.results[0])
+//                }
             }
             //Once we get Favorite flags we update the UI
             propertyViewModel.getFavorites()
-        }
-
-        propertyViewModel.favoritesData.observe(this) { favoritesList ->
-            // Set Favorite flags
-            //TODO
-//             adapter.properties.map { listing ->
-//                listing.isFavorite = false
-//                favoritesList.map { favoritesEntity ->
-//                    if (listing.id == favoritesEntity.listingId) {
-//                        listing.isFavorite = true
-//                    }
-//                }
-//            }
-
         }
     }
 }
