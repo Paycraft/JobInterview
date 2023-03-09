@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W400
@@ -12,99 +14,115 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import com.joedae.propertylist.R
 import com.joedae.propertylist.data.*
 
 @Composable
-fun PDP(property: Property) {
-    Column {
-        Image(
-            painterResource(R.drawable.main),
-            "Images",
-            Modifier.size(width = 393.dp, height = 303.dp)
-        )
-        Text(
-            property.listing.localization.de.text.title,
-            fontSize = 27.sp,
-            fontWeight = W700
-        )
-        Text(
-            "Rent per month",
-            fontSize = 19.sp,
-            fontWeight = W400
-        )
-        Text(
-            property.listing.prices.currency + " " + property.listing.prices.buy.price.toString() + ".-",
-            fontSize = 27.sp,
-            fontWeight = W700
-        )
-        Row {
-            Text(
-                "Rooms",
-                fontSize = 19.sp,
-                fontWeight = W400
-            )
-            Spacer(modifier = Modifier.width(170.dp))
-            Text(
-                "Livingspace",
-                fontSize = 19.sp,
-                fontWeight = W400
-            )
+fun PDP(loading: LiveData<Boolean>, detailData: LiveData<PropertyDetailResponse>) {
+
+    val loading by loading.observeAsState()
+    val detailProperty by detailData.observeAsState()
+
+
+    if(loading!!) {
+        Text("Loading...")
+    } else {
+        val detail = detailProperty?.listings?.get(0)
+        if (detail != null) {
+            Column {
+                Image(
+                    painterResource(R.drawable.main),
+                    "Images",
+                    Modifier.size(width = 393.dp, height = 303.dp)
+                )
+                Text(
+                    detail.listing.localization.de.text.title,
+                    fontSize = 27.sp,
+                    fontWeight = W700
+                )
+                Text(
+                    "Rent per month",
+                    fontSize = 19.sp,
+                    fontWeight = W400
+                )
+                Text(
+                    detail.listing.prices.currency + " " + detail.listing.prices.buy.price.toString() + ".-",
+                    fontSize = 27.sp,
+                    fontWeight = W700
+                )
+                Row {
+                    Text(
+                        "Rooms",
+                        fontSize = 19.sp,
+                        fontWeight = W400
+                    )
+                    Spacer(modifier = Modifier.width(170.dp))
+                    Text(
+                        "Livingspace",
+                        fontSize = 19.sp,
+                        fontWeight = W400
+                    )
+                }
+                Row {
+                    Icon(
+                        painter = painterResource(R.drawable.home),
+                        contentDescription = "rooms icon",
+                        modifier = Modifier.size(21.dp, 24.dp)
+                    )
+                    Text(
+                        detail.listing.characteristics.numberOfRooms.toString(),
+                        fontSize = 27.sp,
+                        fontWeight = W700
+                    )
+                    Spacer(modifier = Modifier.width(170.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.select),
+                        contentDescription = "living space icon",
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Text(
+                        detail.listing.characteristics.livingSpace.toString() + " m²",
+                        fontSize = 21.sp,
+                        fontWeight = W700
+                    )
+                }
+                Row {
+                    Text(
+                        "Available from",
+                        fontSize = 19.sp,
+                        fontWeight = W400
+                    )
+                    Spacer(modifier = Modifier.width(110.dp))
+                    Text(
+                        "Immediately",
+                        fontSize = 19.sp,
+                        fontWeight = W700
+                    )
+                }
+                Image(
+                    painter = painterResource(R.drawable.map),
+                    contentDescription = "Map",
+                    Modifier.size(width = 393.dp, height = 174.dp)
+                )
+                Text(
+                    "Description",
+                    fontSize = 27.sp,
+                    fontWeight = W700
+                )
+                detail.listing.localization.de.text.description?.let {
+                    Text(
+                        it,
+                        fontSize = 19.sp,
+                        fontWeight = W400
+                    )
+                }
+            }
         }
-        Row {
-            Icon(
-                painter = painterResource(R.drawable.home),
-                contentDescription = "rooms icon",
-                modifier = Modifier.size(21.dp, 24.dp)
-            )
-            Text(
-                property.listing.characteristics.numberOfRooms.toString(),
-                fontSize = 27.sp,
-                fontWeight = W700
-            )
-            Spacer(modifier = Modifier.width(170.dp))
-            Icon(
-                painter = painterResource(R.drawable.select),
-                contentDescription = "living space icon",
-                modifier = Modifier.size(24.dp)
-            )
-            Text(
-                property.listing.characteristics.livingSpace.toString() + " m²",
-                fontSize = 21.sp,
-                fontWeight = W700
-            )
-        }
-        Row {
-            Text(
-                "Available from",
-                fontSize = 19.sp,
-                fontWeight = W400
-            )
-            Spacer(modifier = Modifier.width(110.dp))
-            Text(
-                "Immediately",
-                fontSize = 19.sp,
-                fontWeight = W700
-            )
-        }
-        Image(
-            painter = painterResource(R.drawable.map),
-            contentDescription = "Map",
-            Modifier.size(width = 393.dp, height = 174.dp)
-        )
-        Text(
-            "Description",
-            fontSize = 27.sp,
-            fontWeight = W700
-        )
-        property.listing.localization.de.text.description?.let {
-            Text(
-                it,
-                fontSize = 19.sp,
-                fontWeight = W400
-            )
-        }
+
     }
+
+
 }
 
 @Composable
@@ -119,7 +137,7 @@ fun PDPPreview() {
             adActive = false,
             isQualityPartner = false,
             isPremiumBranding = false,
-            profilePageUrlKeyword = "smg-swiss-marketplace-group-ag"
+            "smg-swiss-marketplace-group-ag"
         ), Listing(
             "104123262",
             "BUY",
@@ -129,28 +147,28 @@ fun PDPPreview() {
             Characteristics(
                 1,
                 1,
-                true,
+                hasFireplace = true,
                 9.5,
                 1999,
                 isMinergieGeneral = true,
                 isWheelchairAccessible = true,
                 hasSwimmingPool = true,
-                ceilingHeight = 3.5,
-                distanceShop = 1,
-                yearLastRenovated = 2022,
+                3.5,
+                1,
+                2022,
                 hasGarage = true,
                 hasParking = true,
-                numberOfFloors = 1,
-                lotSize = 1,
+                1,
+                1,
                 hasBalcony = true,
-                distanceMotorway = 1,
-                livingSpace = 1,
+                1,
+                1,
                 hasCableTv = true,
                 hasNiceView = true,
-                distanceHighSchool = 1,
-                distanceKindergarten = 1,
-                distancePrimarySchool = 1,
-                distancePublicTransport = 1,
+                1,
+                1,
+                1,
+                1,
                 hasElevator = true,
                 isNewBuilding = true,
                 isMinergieCertified = true,
@@ -170,15 +188,15 @@ fun PDPPreview() {
             Lister(
                 accountActive = true,
                 migratedToAws = true,
-                type = "AGENCY",
-                logoUrl = "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-                legalName = "SMG",
-                phone = "+41 44 711 86 67",
-                name = "Homegate",
-                id = "heia"
+                "AGENCY",
+                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
+                "SMG",
+                "+41 44 711 86 67",
+                "Homegate",
+                "heia"
             )
         ), false
     )
 
-    PDP(property)
+//    PDP(property)
 }

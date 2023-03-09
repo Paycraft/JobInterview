@@ -11,7 +11,7 @@ class GetPropertyUseCase {
         return repo.getListings(onDataLoad)
     }
 
-    fun getPropertyById(id: Int) {
-        repo.getListingById()
+    fun getPropertyById(id: String, onDataLoad: OnDataLoad) {
+        repo.getListingById(id, onDataLoad)
     }
 }

@@ -10,8 +10,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class PropertyRepository {
 
-    private lateinit var apiResponse: PropertyResponse
-
     fun getListings(onDataLoad: OnDataLoad) {
         val service = Retrofit.Builder()
             .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
@@ -22,7 +20,7 @@ class PropertyRepository {
 
         service.getProperty().enqueue(object : Callback<PropertyResponse> {
             override fun onFailure(call: Call<PropertyResponse>, t: Throwable) {
-                Log.i("API Response", "Failed")
+                Log.i("API Response", "Load all propertys failed")
             }
 
             override fun onResponse(
@@ -30,12 +28,31 @@ class PropertyRepository {
                 response: Response<PropertyResponse>
             ) {
                 Log.i("API Response", response.body().toString())
-                apiResponse = response.body()!!
-                onDataLoad.onDataLoad(apiResponse)
+                onDataLoad.onDataLoad(response.body())
             }
         })
     }
 
-    fun getListingById() {
+    fun getListingById(id: String, onDataLoad: OnDataLoad) {
+        val service = Retrofit.Builder()
+            .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(PropertyService::class.java)
+
+
+        service.getPropertyByID(id).enqueue(object : Callback<PropertyDetailResponse> {
+            override fun onFailure(call: Call<PropertyDetailResponse>, t: Throwable) {
+                Log.i("API Response", "Load detail property failed")
+            }
+
+            override fun onResponse(
+                call: Call<PropertyDetailResponse>,
+                response: Response<PropertyDetailResponse>
+            ) {
+                Log.i("API Response", response.body().toString())
+                onDataLoad.onDetailLoad(response.body())
+            }
+        })
     }
 }
