@@ -16,16 +16,20 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.joedae.propertylist.R
-import com.joedae.propertylist.data.*
+import com.joedae.propertylist.data.Property
 import com.joedae.propertylist.data.db.CallBackActions
 import com.joedae.propertylist.data.db.FavoritesEntity
 
 @Composable
-fun ListItem(properties: List<Property>, callBackActions: CallBackActions?, favData: LiveData<List<FavoritesEntity>>) {
+fun ListItem(
+    properties: List<Property>,
+    callBackActions: CallBackActions?,
+    favData: LiveData<List<FavoritesEntity>>,
+    onDetailsClick: (id: String) -> Unit
+) {
     val favoriteList by favData.observeAsState()
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -41,7 +45,8 @@ fun ListItem(properties: List<Property>, callBackActions: CallBackActions?, favD
                 Image(
                     painter = painterResource(R.drawable.main),
                     contentDescription = "main image",
-                    modifier = Modifier.clickable { callBackActions?.openPDP(property.id) }
+                    modifier = Modifier.clickable { onDetailsClick(property.id) }
+
                 )
                 if (!property.isFavorite) {
                     Icon(
@@ -57,7 +62,6 @@ fun ListItem(properties: List<Property>, callBackActions: CallBackActions?, favD
                     )
                 }
             }
-
             Column {
                 Text(property.listing.localization.de.text.title)
                 Text(property.listing.address.locality + property.listing.address.street)
@@ -65,76 +69,4 @@ fun ListItem(properties: List<Property>, callBackActions: CallBackActions?, favD
             }
         }
     }
-}
-
-@Composable
-@Preview
-fun ListItemPreview() {
-    val property = Property(
-        "104123262", false, ListingType("TOP"), ListerBranding(
-            "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-            "SMG Swiss Marketplace Group AG",
-            "Homegate",
-            Address("Zürich", "CH", "ZH", "Werdstrasse 21", "8004"),
-            adActive = false,
-            isQualityPartner = false,
-            isPremiumBranding = false,
-            "smg-swiss-marketplace-group-ag"
-        ), Listing(
-            "104123262",
-            "BUY",
-            emptyList(),
-            Prices("CHF", Buy("ALL", 9999999, "ONETIME")),
-            Address("La Brévine", "CH", "NE", "Musterstrasse 999", "2406"),
-            Characteristics(
-                null,
-                1,
-                null,
-                9.5,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                1,
-                null,
-                null,
-                1,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ),
-            Localization(
-                "de", De(
-                    emptyList(),
-                    com.joedae.propertylist.data.Text("Schloss", null, null),
-                    emptyList()
-                )
-            ),
-            Lister(
-                null,
-                null,
-                null,
-                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-                null,
-                "+41 44 711 86 67",
-                null,
-                null
-            )
-        ), false
-    )
-
-//    ListItem(listOf(property), null, null)
 }

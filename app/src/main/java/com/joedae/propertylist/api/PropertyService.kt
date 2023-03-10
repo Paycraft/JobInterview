@@ -1,6 +1,5 @@
 package com.joedae.propertylist.api
 
-import com.joedae.propertylist.data.Property
 import com.joedae.propertylist.data.PropertyDetailResponse
 import com.joedae.propertylist.data.PropertyResponse
 import retrofit2.Call

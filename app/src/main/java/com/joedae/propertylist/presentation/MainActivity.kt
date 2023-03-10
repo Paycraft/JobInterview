@@ -3,20 +3,18 @@ package com.joedae.propertylist.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.joedae.propertylist.data.FavoritesRepo
 import com.joedae.propertylist.data.MyApplicationTheme
 import com.joedae.propertylist.data.db.CallBackActions
 import com.joedae.propertylist.data.db.FavoritesDatabase
-import com.joedae.propertylist.databinding.ActivityMainBinding
 import com.joedae.propertylist.di.PropertyComponent
 import com.joedae.propertylist.domain.FavoritesUseCase
 import com.joedae.propertylist.domain.GetPropertyUseCase
 
 class MainActivity : ComponentActivity() {
-    private lateinit var binding: ActivityMainBinding
-
     private val favoritesUseCase = FavoritesUseCase(
         favoritesRepo = FavoritesRepo(
             FavoritesDatabase.getInstance(PropertyComponent.getContext()).favoritesDao()
@@ -30,17 +28,7 @@ class MainActivity : ComponentActivity() {
         override fun onSetFavorite(id: String) {
             propertyViewModel.setFavorite(id)
         }
-
-        override fun openPDP(id: String) {
-            propertyViewModel.getDetail(id)
-            setContent {
-                MyApplicationTheme {
-                    PDP(propertyViewModel.loading, propertyViewModel.detailData)
-                }
-            }
-        }
     }
-
 
     init {
         propertyViewModel.getListings()
@@ -49,16 +37,31 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        propertyViewModel.propertyData.observe(this) {
+        propertyViewModel.propertyData.observe(this) { propertyResponse ->
             setContent {
                 MyApplicationTheme {
-                    ListItem(it.results, callBackActions, propertyViewModel.favoritesData)
+                    val navController = rememberNavController()
+                    NavHost(navController, startDestination = "listItem") {
+                        composable("listItem") {
+                            ListItem(propertyResponse.results,
+                                callBackActions,
+                                propertyViewModel.favoritesData,
+                                onDetailsClick = { id ->
+                                    propertyViewModel.getDetail(id)
+                                    navController.navigate("details")
+                                })
+                        }
+                        composable("details") {
+                            PDP(propertyViewModel.loading,
+                                propertyViewModel.detailData,
+                                onNavigateUp = {
+                                    navController.popBackStack()
+                                })
+                        }
+                    }
                 }
             }
-            //Once we get Favorite flags we update the UI
-            propertyViewModel.getFavorites()
         }
     }
 }

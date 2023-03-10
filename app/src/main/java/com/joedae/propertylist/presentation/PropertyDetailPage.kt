@@ -2,35 +2,52 @@ package com.joedae.propertylist.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import com.joedae.propertylist.R
-import com.joedae.propertylist.data.*
+import com.joedae.propertylist.data.PropertyDetailResponse
 
 @Composable
-fun PDP(loading: LiveData<Boolean>, detailData: LiveData<PropertyDetailResponse>) {
+fun PDP(
+    loading: LiveData<Boolean>,
+    detailData: LiveData<PropertyDetailResponse>,
+    onNavigateUp: () -> Unit
+) {
 
-    val loading by loading.observeAsState()
+    val isLoading by loading.observeAsState()
     val detailProperty by detailData.observeAsState()
 
-
-    if(loading!!) {
+    if (isLoading!!) {
         Text("Loading...")
     } else {
         val detail = detailProperty?.listings?.get(0)
         if (detail != null) {
-            Column {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 10.dp)
+                ) {
+                    IconButton(onClick = onNavigateUp) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.arrow_back),
+                            contentDescription = "Go back"
+                        )
+                    }
+                }
                 Image(
                     painterResource(R.drawable.main),
                     "Images",
@@ -119,84 +136,5 @@ fun PDP(loading: LiveData<Boolean>, detailData: LiveData<PropertyDetailResponse>
                 }
             }
         }
-
     }
-
-
-}
-
-@Composable
-@Preview
-fun PDPPreview() {
-    val property = Property(
-        "104123262", false, ListingType("TOP"), ListerBranding(
-            "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-            "SMG Swiss Marketplace Group AG",
-            "Homegate",
-            Address("Zürich", "CH", "ZH", "Werdstrasse 21", "8004"),
-            adActive = false,
-            isQualityPartner = false,
-            isPremiumBranding = false,
-            "smg-swiss-marketplace-group-ag"
-        ), Listing(
-            "104123262",
-            "BUY",
-            emptyList(),
-            Prices("CHF", Buy("ALL", 9999999, "ONETIME")),
-            Address("La Brévine", "CH", "NE", "Musterstrasse 999", "2406"),
-            Characteristics(
-                1,
-                1,
-                hasFireplace = true,
-                9.5,
-                1999,
-                isMinergieGeneral = true,
-                isWheelchairAccessible = true,
-                hasSwimmingPool = true,
-                3.5,
-                1,
-                2022,
-                hasGarage = true,
-                hasParking = true,
-                1,
-                1,
-                hasBalcony = true,
-                1,
-                1,
-                hasCableTv = true,
-                hasNiceView = true,
-                1,
-                1,
-                1,
-                1,
-                hasElevator = true,
-                isNewBuilding = true,
-                isMinergieCertified = true,
-                isChildFriendly = true
-            ),
-            Localization(
-                "de", De(
-                    emptyList(),
-                    Text(
-                        "Schloss",
-                        "echt krasse bude alta",
-                        "im getho"
-                    ),
-                    emptyList()
-                )
-            ),
-            Lister(
-                accountActive = true,
-                migratedToAws = true,
-                "AGENCY",
-                "https://media2.homegate.ch/t_customer_logo/logos/l_heia_v1.png",
-                "SMG",
-                "+41 44 711 86 67",
-                "Homegate",
-                "heia"
-            )
-        ), false
-    )
-
-//    PDP(property)
 }

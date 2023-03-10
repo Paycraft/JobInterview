@@ -2,7 +2,6 @@ package com.joedae.propertylist.di
 
 import android.content.Context
 
-
 object PropertyComponent {
     private lateinit var context: Context
 

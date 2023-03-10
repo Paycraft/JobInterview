@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class PropertyViewModel(
     val getPropertyUseCase: GetPropertyUseCase,
-    val favoritesUseCase: FavoritesUseCase
+    private val favoritesUseCase: FavoritesUseCase
 ) : ViewModel() {
 
     private val _propertyData = MutableLiveData<PropertyResponse>()
@@ -26,7 +26,7 @@ class PropertyViewModel(
     private val _detailData = MutableLiveData<PropertyDetailResponse>()
     val detailData: LiveData<PropertyDetailResponse> = _detailData
 
-    private val _loading = MutableLiveData<Boolean>(true)
+    private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
     private val onDataLoad: OnDataLoad = object : OnDataLoad {
@@ -57,16 +57,9 @@ class PropertyViewModel(
         }
     }
 
-    fun getFavorites() {
-        viewModelScope.launch {
-            favoritesUseCase.getFavorites().collect { _favoritesData.value = it }
-        }
-    }
-
     fun getFavoritesUpdates() {
         viewModelScope.launch {
             favoritesUseCase.getFavoritesUpdates().collect { _favoritesData.value = it }
         }
     }
-
 }

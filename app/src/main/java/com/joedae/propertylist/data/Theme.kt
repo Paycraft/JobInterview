@@ -5,10 +5,7 @@ import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.joedae.propertylist.R
-
 
 val customFont = FontFamily(Font(R.font.opensans_normal))
 val Typography = Typography(defaultFontFamily = customFont)

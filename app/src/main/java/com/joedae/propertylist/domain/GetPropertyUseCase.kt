@@ -4,7 +4,6 @@ import com.joedae.propertylist.data.OnDataLoad
 import com.joedae.propertylist.data.PropertyRepository
 
 class GetPropertyUseCase {
-
     private val repo: PropertyRepository = PropertyRepository()
 
     fun getProperties(onDataLoad: OnDataLoad) {
