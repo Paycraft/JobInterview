@@ -13,7 +13,9 @@ import com.joedae.propertylist.data.db.FavoritesDatabase
 import com.joedae.propertylist.di.PropertyComponent
 import com.joedae.propertylist.domain.FavoritesUseCase
 import com.joedae.propertylist.domain.GetPropertyUseCase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MainActivity : ComponentActivity() {
     private val favoritesUseCase = FavoritesUseCase(
         favoritesRepo = FavoritesRepo(
@@ -22,7 +24,7 @@ class MainActivity : ComponentActivity() {
     )
 
     var propertyViewModel =
-        PropertyViewModel(getPropertyUseCase = GetPropertyUseCase(), favoritesUseCase)
+        PropertyViewModel(GetPropertyUseCase(), favoritesUseCase)
 
     private val callBackActions: CallBackActions = object : CallBackActions {
         override fun onSetFavorite(id: String) {

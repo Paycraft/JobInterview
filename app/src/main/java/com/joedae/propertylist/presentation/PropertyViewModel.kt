@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class PropertyViewModel(
     val getPropertyUseCase: GetPropertyUseCase,
-    private val favoritesUseCase: FavoritesUseCase
+    val favoritesUseCase: FavoritesUseCase
 ) : ViewModel() {
 
     private val _propertyData = MutableLiveData<PropertyResponse>()
