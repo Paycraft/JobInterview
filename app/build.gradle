@@ -69,6 +69,7 @@ dependencies {
 
     //DI
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     //Compose
     implementation("androidx.compose.runtime:runtime:1.3.3")

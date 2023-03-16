@@ -1,4 +1,4 @@
-package com.joedae.propertylist.domain
+package com.joedae.propertylist.domain.implementation
 
 import com.joedae.propertylist.data.FavoritesRepo
 

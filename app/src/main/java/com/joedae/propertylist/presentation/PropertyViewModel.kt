@@ -8,13 +8,16 @@ import com.joedae.propertylist.data.OnDataLoad
 import com.joedae.propertylist.data.PropertyDetailResponse
 import com.joedae.propertylist.data.PropertyResponse
 import com.joedae.propertylist.data.db.FavoritesEntity
-import com.joedae.propertylist.domain.FavoritesUseCase
-import com.joedae.propertylist.domain.GetPropertyUseCase
+import com.joedae.propertylist.domain.implementation.FavoritesUseCase
+import com.joedae.propertylist.domain.implementation.GetPropertyUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PropertyViewModel(
+@HiltViewModel
+class PropertyViewModel @Inject constructor (
     val getPropertyUseCase: GetPropertyUseCase,
     val favoritesUseCase: FavoritesUseCase
 ) : ViewModel() {

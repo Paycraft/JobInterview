@@ -2,7 +2,7 @@ package com.joedae.propertylist.di
 
 import android.content.Context
 
-object PropertyComponent {
+object  PropertyComponent {
     private lateinit var context: Context
 
     fun setContext(context: Context) {
