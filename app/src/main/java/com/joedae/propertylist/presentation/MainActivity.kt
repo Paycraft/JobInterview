@@ -13,8 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    val propertyViewModel: PropertyViewModel by viewModels()
+    private val propertyViewModel: PropertyViewModel by viewModels()
 
     private val callBackActions: CallBackActions = object : CallBackActions {
         override fun onSetFavorite(id: String) {
@@ -22,13 +21,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    init {
-        propertyViewModel.getListings()
-        propertyViewModel.getFavoritesUpdates()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        propertyViewModel.getListings()
+        propertyViewModel.getFavoritesUpdates()
 
         propertyViewModel.propertyData.observe(this) { propertyResponse ->
             setContent {

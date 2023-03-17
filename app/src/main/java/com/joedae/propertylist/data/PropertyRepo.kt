@@ -7,8 +7,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class PropertyRepository {
+class PropertyRepo @Inject constructor() {
     fun getListings(onDataLoad: OnDataLoad) {
         val service = Retrofit.Builder()
             .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")

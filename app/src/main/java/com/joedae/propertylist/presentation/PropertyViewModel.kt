@@ -17,9 +17,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class PropertyViewModel @Inject constructor (
-    val getPropertyUseCase: GetPropertyUseCase,
-    val favoritesUseCase: FavoritesUseCase
+class PropertyViewModel @Inject constructor(
+    private val getPropertyUseCase: GetPropertyUseCase,
+    private val favoritesUseCase: FavoritesUseCase
 ) : ViewModel() {
 
     private val _propertyData = MutableLiveData<PropertyResponse>()

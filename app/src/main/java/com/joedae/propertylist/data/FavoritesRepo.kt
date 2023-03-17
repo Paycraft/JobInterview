@@ -3,12 +3,9 @@ package com.joedae.propertylist.data
 import com.joedae.propertylist.data.db.FavoritesDao
 import com.joedae.propertylist.data.db.FavoritesEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class FavoritesRepo(private val favoritesDao: FavoritesDao) {
-    fun getFavorites(): Flow<List<FavoritesEntity>> {
-        return favoritesDao.loadFavoritesFlow()
-    }
-
+class FavoritesRepo @Inject constructor(private val favoritesDao: FavoritesDao) {
     fun getFavoritesUpdates(): Flow<List<FavoritesEntity>> {
         return favoritesDao.loadFavoriteUpdatesFlow()
     }
