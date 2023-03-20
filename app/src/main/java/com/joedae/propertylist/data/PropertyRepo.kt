@@ -5,21 +5,13 @@ import com.joedae.propertylist.api.PropertyService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
-class PropertyRepo @Inject constructor() {
+class PropertyRepo @Inject constructor(private val propertyService: PropertyService) {
     fun getListings(onDataLoad: OnDataLoad) {
-        val service = Retrofit.Builder()
-            .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-            .create(PropertyService::class.java)
-
-        service.getProperty().enqueue(object : Callback<PropertyResponse> {
+        propertyService.getProperty().enqueue(object : Callback<PropertyResponse> {
             override fun onFailure(call: Call<PropertyResponse>, t: Throwable) {
-                Log.i("APIResponse", "Load all propertys failed")
+                Log.i("APIResponse", "Load all listings failed")
             }
 
             override fun onResponse(
@@ -33,13 +25,7 @@ class PropertyRepo @Inject constructor() {
     }
 
     fun getListingById(id: String, onDataLoad: OnDataLoad) {
-        val service = Retrofit.Builder()
-            .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-            .create(PropertyService::class.java)
-
-        service.getPropertyByID(id).enqueue(object : Callback<PropertyDetailResponse> {
+        propertyService.getPropertyByID(id).enqueue(object : Callback<PropertyDetailResponse> {
             override fun onFailure(call: Call<PropertyDetailResponse>, t: Throwable) {
                 Log.i("APIResponse", "Load details failed")
             }

@@ -1,6 +1,7 @@
 package com.joedae.propertylist.di
 
 import android.app.Application
+import com.joedae.propertylist.api.PropertyService
 import com.joedae.propertylist.data.FavoritesRepo
 import com.joedae.propertylist.data.PropertyRepo
 import com.joedae.propertylist.data.db.FavoritesDao
@@ -13,6 +14,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -25,8 +28,18 @@ object AppModule {
     }
 
     @Provides
-    fun providePropertyRepo(): PropertyRepo {
-        return PropertyRepo()
+    @Singleton
+    fun providePropertyService(): PropertyService {
+        return Retrofit.Builder()
+            .baseUrl("https://private-9f1bb1-homegate3.apiary-mock.com/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(PropertyService::class.java)
+    }
+
+    @Provides
+    fun providePropertyRepo(propertyService: PropertyService): PropertyRepo {
+        return PropertyRepo(propertyService)
     }
 
     @Provides
