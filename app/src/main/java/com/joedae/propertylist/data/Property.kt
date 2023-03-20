@@ -1,9 +1,9 @@
 package com.joedae.propertylist.data
 
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
 
 @Serializable
-data class Property (
+data class Property(
     val id: String,
     val remoteViewing: Boolean,
     val listingType: ListingType,
@@ -13,7 +13,7 @@ data class Property (
 )
 
 @Serializable
-data class ListerBranding (
+data class ListerBranding(
     val logoUrl: String,
     val legalName: String,
     val name: String,
@@ -25,7 +25,7 @@ data class ListerBranding (
 )
 
 @Serializable
-data class Address (
+data class Address(
     val locality: String,
     val country: String,
     val region: String,
@@ -35,7 +35,7 @@ data class Address (
 )
 
 @Serializable
-data class GeoCoordinates (
+data class GeoCoordinates(
     val accuracy: String?,
     val manual: Boolean?,
     val latitude: Double,
@@ -43,7 +43,7 @@ data class GeoCoordinates (
 )
 
 @Serializable
-data class Listing (
+data class Listing(
     val id: String,
     val offerType: String,
     val categories: List<String>,
@@ -55,7 +55,7 @@ data class Listing (
 )
 
 @Serializable
-data class Characteristics (
+data class Characteristics(
     val cubage: Long?,
     val totalFloorSpace: Long,
     val hasFireplace: Boolean?,
@@ -87,7 +87,7 @@ data class Characteristics (
 )
 
 @Serializable
-data class Lister (
+data class Lister(
     val accountActive: Boolean?,
     val migratedToAws: Boolean?,
     val type: String?,
@@ -99,45 +99,45 @@ data class Lister (
 )
 
 @Serializable
-data class Localization (
+data class Localization(
     val primary: String,
     val de: De
 )
 
 @Serializable
-data class De (
+data class De(
     val attachments: List<Attachment>,
     val text: Text,
     val urls: List<ListingType>
 )
 
 @Serializable
-data class Attachment (
+data class Attachment(
     val type: String,
     val url: String,
     val file: String
 )
 
 @Serializable
-data class Text (
+data class Text(
     val title: String,
     val description: String?,
     val situation: String?
 )
 
 @Serializable
-data class ListingType (
+data class ListingType(
     val type: String
 )
 
 @Serializable
-data class Prices (
+data class Prices(
     val currency: String,
     val buy: Buy
 )
 
 @Serializable
-data class Buy (
+data class Buy(
     val area: String,
     val price: Long,
     val interval: String
