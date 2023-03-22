@@ -15,25 +15,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.joedae.propertylist.R
-import com.joedae.propertylist.data.Property
+import com.joedae.propertylist.data.PropertyResponse
 import com.joedae.propertylist.data.db.CallBackActions
 import com.joedae.propertylist.data.db.FavoritesEntity
 
 @Composable
 fun ListItem(
-    properties: List<Property>,
+    propertyData: LiveData<PropertyResponse>,
+    favoritesData: LiveData<List<FavoritesEntity>>,
     callBackActions: CallBackActions?,
-    favData: LiveData<List<FavoritesEntity>>,
     onDetailsClick: (id: String) -> Unit
 ) {
-    val favoriteList by favData.observeAsState()
+    val favoriteList by favoritesData.observeAsState()
+    val propertiesList by propertyData.observeAsState()
 
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-        items(properties) { property ->
+    LazyColumn(
+        modifier = Modifier.testTag(PropertyListTag),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        items(propertiesList?.results ?: emptyList()) { property ->
             property.isFavorite = false
             favoriteList?.map { favoritesEntity ->
                 if (property.id == favoritesEntity.listingId) {
@@ -52,13 +57,17 @@ fun ListItem(
                     Icon(
                         painter = painterResource(R.drawable.fav_border),
                         contentDescription = "favourite button",
-                        modifier = Modifier.clickable { callBackActions?.onSetFavorite(property.id) }
+                        modifier = Modifier
+                            .testTag(NotFavoriteTag)
+                            .clickable { callBackActions?.onSetFavorite(property.id) }
                     )
                 } else {
                     Icon(
                         painter = painterResource(R.drawable.fav_filled),
                         contentDescription = "favourite button",
-                        modifier = Modifier.clickable { callBackActions?.onSetFavorite(property.id) }
+                        modifier = Modifier
+                            .testTag(FavoriteTag)
+                            .clickable { callBackActions?.onSetFavorite(property.id) }
                     )
                 }
             }
@@ -70,3 +79,7 @@ fun ListItem(
         }
     }
 }
+
+const val PropertyListTag = "PropertyList"
+const val FavoriteTag = "Favorite"
+const val NotFavoriteTag = "NotFavorite"

@@ -3,6 +3,8 @@ package com.joedae.propertylist.di
 import android.app.Application
 import com.joedae.propertylist.api.PropertyService
 import com.joedae.propertylist.data.FavoritesRepo
+import com.joedae.propertylist.data.IFavoritesRepo
+import com.joedae.propertylist.data.IPropertyRepo
 import com.joedae.propertylist.data.PropertyRepo
 import com.joedae.propertylist.data.db.FavoritesDao
 import com.joedae.propertylist.data.db.FavoritesDatabase
@@ -20,13 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-    @Provides
-    @Singleton
-    fun provideFavoritesDao(application: Application): FavoritesDao {
-        return FavoritesDatabase.getInstance(application).favoritesDao()
-    }
-
+object ServiceModule {
     @Provides
     @Singleton
     fun providePropertyService(): PropertyService {
@@ -35,25 +31,5 @@ object AppModule {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(PropertyService::class.java)
-    }
-
-    @Provides
-    fun providePropertyRepo(propertyService: PropertyService): PropertyRepo {
-        return PropertyRepo(propertyService)
-    }
-
-    @Provides
-    fun provideFavoritesRepo(favoritesDao: FavoritesDao): FavoritesRepo {
-        return FavoritesRepo(favoritesDao)
-    }
-
-    @Provides
-    fun provideGetPropertyUseCase(propertyRepo: PropertyRepo): IGetPropertyUseCase {
-        return GetPropertyUseCase(propertyRepo)
-    }
-
-    @Provides
-    fun provideFavoritesUseCase(favoritesRepo: FavoritesRepo): IFavoritesUseCase {
-        return FavoritesUseCase(favoritesRepo)
     }
 }

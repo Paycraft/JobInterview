@@ -27,27 +27,26 @@ class MainActivity : ComponentActivity() {
         propertyViewModel.getListings()
         propertyViewModel.getFavoritesUpdates()
 
-        propertyViewModel.propertyData.observe(this) { propertyResponse ->
-            setContent {
-                MyApplicationTheme {
-                    val navController = rememberNavController()
-                    NavHost(navController, startDestination = "listItem") {
-                        composable("listItem") {
-                            ListItem(propertyResponse.results,
-                                callBackActions,
-                                propertyViewModel.favoritesData,
-                                onDetailsClick = { id ->
-                                    propertyViewModel.getDetail(id)
-                                    navController.navigate("details")
-                                })
+        setContent {
+            MyApplicationTheme {
+                val navController = rememberNavController()
+                NavHost(navController, startDestination = "listItem") {
+                    composable("listItem") {
+                        ListItem(
+                            propertyViewModel.propertyData,
+                            propertyViewModel.favoritesData,
+                            callBackActions
+                        ) { id ->
+                            propertyViewModel.getDetail(id)
+                            navController.navigate("details")
                         }
-                        composable("details") {
-                            PDP(propertyViewModel.loading,
-                                propertyViewModel.detailData,
-                                onNavigateUp = {
-                                    navController.popBackStack()
-                                })
-                        }
+                    }
+                    composable("details") {
+                        PDP(propertyViewModel.loading,
+                            propertyViewModel.detailData,
+                            onNavigateUp = {
+                                navController.popBackStack()
+                            })
                     }
                 }
             }

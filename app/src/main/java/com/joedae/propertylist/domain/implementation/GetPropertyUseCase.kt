@@ -1,12 +1,12 @@
 package com.joedae.propertylist.domain.implementation
 
+import com.joedae.propertylist.data.IPropertyRepo
 import com.joedae.propertylist.data.OnDataLoad
-import com.joedae.propertylist.data.PropertyRepo
 import com.joedae.propertylist.domain.IGetPropertyUseCase
 import javax.inject.Inject
 
 
-class GetPropertyUseCase @Inject constructor(private val propertyRepo: PropertyRepo) :
+class GetPropertyUseCase @Inject constructor(private val propertyRepo: IPropertyRepo) :
     IGetPropertyUseCase {
 
     override fun getProperties(onDataLoad: OnDataLoad) {
