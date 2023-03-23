@@ -7,8 +7,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class PropertyRepo @Inject constructor(private val propertyService: PropertyService) {
-    fun getListings(onDataLoad: OnDataLoad) {
+class PropertyRepo @Inject constructor(private val propertyService: PropertyService): IPropertyRepo {
+    override fun getListings(onDataLoad: OnDataLoad) {
         propertyService.getProperty().enqueue(object : Callback<PropertyResponse> {
             override fun onFailure(call: Call<PropertyResponse>, t: Throwable) {
                 Log.i("APIResponse", "Load all listings failed")
@@ -24,7 +24,7 @@ class PropertyRepo @Inject constructor(private val propertyService: PropertyServ
         })
     }
 
-    fun getListingById(id: String, onDataLoad: OnDataLoad) {
+    override fun getListingById(id: String, onDataLoad: OnDataLoad) {
         propertyService.getPropertyByID(id).enqueue(object : Callback<PropertyDetailResponse> {
             override fun onFailure(call: Call<PropertyDetailResponse>, t: Throwable) {
                 Log.i("APIResponse", "Load details failed")
