@@ -1,4 +1,4 @@
-package com.joedae.propertylist.data
+package com.joedae.propertylist.presentation
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography

@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.joedae.propertylist.data.MyApplicationTheme
 import com.joedae.propertylist.data.db.CallBackActions
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,9 +43,9 @@ class MainActivity : ComponentActivity() {
                     composable("details") {
                         PDP(propertyViewModel.loading,
                             propertyViewModel.detailData,
-                            onNavigateUp = {
-                                navController.popBackStack()
-                            })
+                        ) {
+                            navController.popBackStack()
+                        }
                     }
                 }
             }
