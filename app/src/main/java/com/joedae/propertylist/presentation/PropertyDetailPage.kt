@@ -18,6 +18,13 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 import com.joedae.propertylist.R
 import com.joedae.propertylist.data.PropertyDetailResponse
 
@@ -31,11 +38,28 @@ fun PDP(
     val isLoading by loading.observeAsState()
     val detailProperty by detailData.observeAsState()
 
+    val switzerland = LatLng(47.0, 8.0)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(switzerland, 6f)
+    }
+
     if (isLoading!!) {
         Text("Loading...")
     } else {
         val detail = detailProperty?.listings?.get(0)
         if (detail != null) {
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState,
+            ) {
+                Marker(
+                    state = MarkerState(position = switzerland),
+                    title = "MyPosition",
+                    snippet = "This is a description of this Marker",
+                    draggable = true
+                )
+            }
+
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

@@ -1,10 +1,7 @@
 package com.joedae.propertylist
 
-import androidx.compose.ui.test.assert
-import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onNodeWithTag
 import com.joedae.propertylist.presentation.FavoriteTag
 import com.joedae.propertylist.presentation.MainActivity
 import com.joedae.propertylist.presentation.PropertyListTag
@@ -31,6 +28,6 @@ class SetFavoriteTest {
     @Test
     fun testIsFavorite() {
         composeTestRule.onNodeWithTag(PropertyListTag)
-            .onChildren()[2].assert(hasTestTag(FavoriteTag))
+            .onChildren().filterToOne(hasTestTag(FavoriteTag)).assertExists()
     }
 }
